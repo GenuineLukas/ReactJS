@@ -1,7 +1,9 @@
 import classes from './CartItem.module.css';
+import useCounter from "../../hooks/use-counter";
 
 const CartItem = (props) => {
   const { title, quantity, total, price } = props.item;
+  const {count, incrementHandler, decrementHandler} = useCounter();
 
   return (
     <li className={classes.item}>
@@ -17,8 +19,8 @@ const CartItem = (props) => {
           x <span>{quantity}</span>
         </div>
         <div className={classes.actions}>
-          <button>-</button>
-          <button>+</button>
+          <button onClick={decrementHandler}>-</button>
+          <button onClick={incrementHandler}>+</button>
         </div>
       </div>
     </li>
