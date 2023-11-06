@@ -1,9 +1,24 @@
 import classes from './CartItem.module.css';
-import useCounter from "../../hooks/use-counter";
+import {useDispatch} from 'react-redux';
+import {cartActions} from "../../store/cart-slice";
 
 const CartItem = (props) => {
-  const { title, quantity, total, price } = props.item;
-  const {count, incrementHandler, decrementHandler} = useCounter();
+  const { id, title, quantity, total, price } = props.item;
+  const dispatch = useDispatch();
+
+  const removeItemHandler = () => {
+    dispatch(cartActions.removeItemFormCart(id));
+  }
+
+  const addItemHandler = () => {
+    dispatch(cartActions.addItemToCart(
+        {
+        id,
+        title,
+        price,
+        })
+    );
+  };
 
   return (
     <li className={classes.item}>
@@ -19,8 +34,8 @@ const CartItem = (props) => {
           x <span>{quantity}</span>
         </div>
         <div className={classes.actions}>
-          <button onClick={decrementHandler}>-</button>
-          <button onClick={incrementHandler}>+</button>
+          <button onClick={removeItemHandler}>-</button>
+          <button onClick={addItemHandler}>+</button>
         </div>
       </div>
     </li>
